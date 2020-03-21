@@ -48,8 +48,8 @@ class CameraSegment:
 
     def getColorImage(self):
         if self.client.hasproxy():
-            self.lock.acquire()
             img = np.zeros((self.height, self.width,3), np.uint8)
+            self.lock.acquire()
             img = self.trackImage
             img.shape = self.trackImage.shape
             self.lock.release()
@@ -59,14 +59,13 @@ class CameraSegment:
     def setColorImage(self,image):
         if self.client.hasproxy():
             self.lock.acquire()
-            self.trackImage = image
-            self.trackImage.shape = image.shape
+            self.trackImage = np.asarray(image)
             self.lock.release()
 
     def getThresholdImage(self):
         if self.client.hasproxy():
-            self.lock.acquire()
             img = np.zeros((self.height, self.width,3), np.uint8)
+            self.lock.acquire()
             img = self.thresholdImage
             img.shape = self.thresholdImage.shape
             self.lock.release()
@@ -76,6 +75,5 @@ class CameraSegment:
     def setThresholdImage(self,image):
         if self.client.hasproxy():
             self.lock.acquire()
-            self.thresholdImage = image
-            self.thresholdImage.shape = image.shape
+            self.thresholdImage = np.asarray(image)
             self.lock.release()
